@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Reportes por día</title>
+</head>
+<body>
+	
+	<h1>Consultar un día</h1>
+	
+	<form method="get">
+	    <input type="date" name="fecha" value=""/>
+	    <input type="submit" value="Consultar"/>
+	</form>
+
+	<table border="3">
+		<tr>
+			<th colspan="2">Motor Propulsor Babor</th>
+			<th colspan="2">Motor Propulsor Estribor</th>
+			<th colspan="2">Motor Propulsor Bowthruster</th>
+			<th colspan="2">Motor Generador Babor</th>
+			<th colspan="2">Motor Generador Estribor</th>
+			<td rowspan="2">Consumo Total de Combustible</td>
+		</tr>
+		<tr>
+			<td>Consumo</td>
+			<td>Horas</td>
+			<td>Consumo</td>
+			<td>Horas</td>
+			<td>Consumo</td>
+			<td>Horas</td>
+			<td>Consumo</td>
+			<td>Horas</td>
+			<td>Consumo</td>
+			<td>Horas</td>
+		</tr>
+		<tr>
+			<td>{{consumo.0}}</td>
+			<td>{{consumo.1}}</td>
+			<td>{{consumo.2}}</td>
+			<td>{{consumo.3}}</td>
+			<td>{{consumo.4}}</td>
+			<td>{{consumo.5}}</td>
+			<td>{{consumo.6}}</td>
+			<td>{{consumo.7}}</td>
+			<td>{{consumo.8}}</td>
+			<td>{{consumo.9}}</td>
+			<td>{{consumo.10}}</td>
+		</tr>
+	</table>
+</body>
+</html>

@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from prints.views import getReportes
+from reports.views import getReportes
 
 urlpatterns = patterns('',
     # Examples:
