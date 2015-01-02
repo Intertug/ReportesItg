@@ -14,32 +14,40 @@
 
 	<table border="3">
 		<tr>
+			<th rowspan="2">Día</th>
 			<th colspan="2">Motor Propulsor Babor</th>
 			<th colspan="2">Motor Propulsor Estribor</th>
-			<th colspan="2">Motor Propulsor Bowthruster</th>
+			{% if rmGlobal == "baruinti" or rmGlobal == "barupacifico" %}
+				<th colspan="2">Motor Propulsor Bowthruster</th>
+			{% endif %}
 			<th colspan="2">Motor Generador Babor</th>
 			<th colspan="2">Motor Generador Estribor</th>
-			<td rowspan="2">Consumo Total de Combustible</td>
+			<th rowspan="2">Consumo Total de Combustible</th>
 		</tr>
 		<tr>
 			<td>Consumo</td>
 			<td>Horas</td>
 			<td>Consumo</td>
 			<td>Horas</td>
-			<td>Consumo</td>
-			<td>Horas</td>
+			{% if rmGlobal == "baruinti" or rmGlobal == "barupacifico" %}
+				<td>Consumo</td>
+				<td>Horas</td>
+			{% endif %}
 			<td>Consumo</td>
 			<td>Horas</td>
 			<td>Consumo</td>
 			<td>Horas</td>
 		</tr>
 		<tr>
+			<td>{{date}}</td>
 			<td>{{consumo.0}}</td>
 			<td>{{consumo.1}}</td>
 			<td>{{consumo.2}}</td>
 			<td>{{consumo.3}}</td>
-			<td>{{consumo.4}}</td>
-			<td>{{consumo.5}}</td>
+			{% if rmGlobal == "baruinti" or rmGlobal == "barupacifico" %}
+				<td>{{consumo.4}}</td>
+				<td>{{consumo.5}}</td>
+			{% endif %}
 			<td>{{consumo.6}}</td>
 			<td>{{consumo.7}}</td>
 			<td>{{consumo.8}}</td>
