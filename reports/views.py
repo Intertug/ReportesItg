@@ -3,6 +3,8 @@ from django.db import connection
 from reports.models import *
 from datetime import datetime
 
+rmGlobal = "vali"
+
 #Generadores de Templates
 
 def getReportes(request):
@@ -21,21 +23,23 @@ def getDia(request):
 
 def getMes(request):
 
-	if 'fecha' in request.GET:
-		date = request.GET['fecha']
+	if 'mes' in request.GET:
+		mes = request.GET['mes']
+		ano = request.GET['ano']
+		date = str(ano) + "-" + str(mes) + "-01"
 	else:
 		date = datetime.now()
 
-	consumo = genMes()
+	consumo = genMes(date)
 
 	return render_to_response("mes.html", locals())
 
 #Generadores de consulta
 
-def genMes():
+def genMes(date):
 
 	cursor = connection.cursor()
-	cursor.execute('select fechahora, codvariable, valor from datos where month(fechahora) = month(curdate());')
+	cursor.execute('select fechahora, codvariable, valor from datos where month(fechahora) = month("'+str(date)+'");')
 	rows = cursor.fetchall()
 	cursor.close()
 
