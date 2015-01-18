@@ -3,7 +3,7 @@ from django.db import connection
 from reports.models import *
 from datetime import datetime
 
-rmGlobal = "vali"
+rm = "barupacifico"
 
 #Generadores de Templates
 
@@ -16,6 +16,8 @@ def getDia(request):
 		date = request.GET['fecha']
 	else:
 		date = datetime.now()
+
+	rmGlobal = rm
 	
 	consumo = genDia(date)
 
@@ -29,6 +31,8 @@ def getMes(request):
 		date = str(ano) + "-" + str(mes) + "-01"
 	else:
 		date = datetime.now()
+
+	rmGlobal = rm
 
 	consumo = genMes(date)
 
