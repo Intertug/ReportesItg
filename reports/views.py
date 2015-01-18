@@ -22,24 +22,107 @@ def getDia(request):
 	#consumo = genConsumoDia(request)
 	consumo = genDia(request, date)
 
-	return render_to_response("dia.html", consumo)
+	return render_to_response("dia.html", locals())
 
-def getSemana(request):
+def getMes(request):
 
-	consumo = genSemana()
+	consumo = genMes()
 
-	return render_to_response("semana.html", consumo)
+	return render_to_response("mes.html", locals())
 
 #Generadores de consulta
 
-def genSemana():
+def genMes():
 
 	cursor = connection.cursor()
-	cursor.execute('select fechahora, codvariable, valor from datos where yearweek(fechahora) = yearweek(curdate());')
+	cursor.execute('select fechahora, codvariable, valor from datos where month(fechahora) = month(curdate());')
 	rows = cursor.fetchall()
 	cursor.close()
 
-	return rows
+	prp000 = []
+	prp001 = []
+	prp002 = []
+	prs000 = []
+	prs001 = []
+	prs002 = []
+	bow001 = []
+	bow002 = []
+	gep001 = []
+	gep002 = []
+	ges001 = []
+	ges002 = []
+
+	auxprp000 = []
+	auxprp001 = []
+	auxprp002 = []
+	auxprs000 = []
+	auxprs001 = []
+	auxprs002 = []
+	auxbow001 = []
+	auxbow002 = []
+	auxgep001 = []
+	auxgep002 = []
+	auxges001 = []
+	auxges002 = []
+
+	for dia in range(30):
+		for r in rows:
+			if str(r[0]) >= "2015-01-" + str(dia) and str(r[0]) < "2015-01-" + str(dia + 1):
+				if r[1] == "PRP000":
+					if r[2] > 400:
+						auxprp000.append(r[2])
+				elif r[1] == "PRP001":
+					auxprp001.append(r[2])
+				elif r[1] == "PRP002":
+					auxprp002.append(r[2])
+				elif r[1] == "PRS000":
+					if r[1] > 400:
+						auxprs000.append(r[2])
+				elif r[1] == "PRS001":
+					auxprs001.append(r[2])
+				elif r[1] == "PRS002":
+					auxprs002.append(r[2])
+				elif r[1] == "BOW001":
+					auxbow001.append(r[2])
+				elif r[1] == "BOW002":
+					auxbow002.append(r[2])
+				elif r[1] == "GEP001":
+					auxgep001.append(r[2])
+				elif r[1] == "GEP002":
+					auxgep002.append(r[2])
+				elif r[1] == "GES001":
+					auxges001.append(r[2])
+				elif r[1] == "GES002":
+					auxges002.append(r[2])
+
+		prp000.append(auxprp000)
+		prp001.append(auxprp001)
+		prp002.append(auxprp002)
+		prs000.append(auxprs000)
+		prs001.append(auxprs001)
+		prs002.append(auxprs002)
+		bow001.append(auxbow001)
+		bow002.append(auxbow002)
+		gep001.append(auxgep001)
+		gep002.append(auxgep002)
+		ges001.append(auxges001)
+		ges002.append(auxges002)
+
+		auxprp000 = []
+		auxprp001 = []
+		auxprp002 = []
+		auxprs000 = []
+		auxprs001 = []
+		auxprs002 = []
+		auxbow001 = []
+		auxbow002 = []
+		auxgep001 = []
+		auxgep002 = []
+		auxges001 = []
+		auxges002 = []								
+
+
+	return prp000
 
 def genDia(request, date):
 
