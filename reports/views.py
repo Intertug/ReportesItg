@@ -19,11 +19,23 @@ def getDia(request):
 	else:
 		date = datetime.now()
 	
-	consumo = genConsumoDia(request)
+	#consumo = genConsumoDia(request)
+	consumo = genDia(request, date)
 
 	return render_to_response("dia.html", locals())
 
 #Generadores de consulta
+
+def genDia(request, date):
+
+	cursor = connection.cursor()
+	cursor.execute('select fechahora, codvariable, valor from datos where dayofyear(fechahora) = dayofyear("'+str(date)+'"); ')
+	rows = cursor.fetchall()
+	cursor.close()
+
+	return rows
+
+
 
 def genConsumoDia(request):
 
