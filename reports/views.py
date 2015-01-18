@@ -22,9 +22,24 @@ def getDia(request):
 	#consumo = genConsumoDia(request)
 	consumo = genDia(request, date)
 
-	return render_to_response("dia.html", locals())
+	return render_to_response("dia.html", consumo)
+
+def getSemana(request):
+
+	consumo = genSemana()
+
+	return render_to_response("semana.html", consumo)
 
 #Generadores de consulta
+
+def genSemana():
+
+	cursor = connection.cursor()
+	cursor.execute('select fechahora, codvariable, valor from datos where yearweek(fechahora) = yearweek(curdate());')
+	rows = cursor.fetchall()
+	cursor.close()
+
+	return rows
 
 def genDia(request, date):
 
@@ -119,10 +134,10 @@ def genDia(request, date):
 	else:
 		consumoHorasGenEst = round((max(ges001) - min(ges001)), 2)
 
-	consumos = (consumoCombustiblePropBab, consumoHorasPropBab, consumoCombustiblePropEst, consumoHorasPropEst, consumoCombustibleBow, consumoHorasBow, consumoCombustibleGenBab, consumoHorasGenBab, consumoCombustibleGenEst, consumoHorasGenEst)
+	total = consumoCombustiblePropBab + consumoCombustiblePropEst + consumoCombustibleBow + consumoCombustibleGenBab + consumoCombustibleGenEst
+	consumos = (consumoCombustiblePropBab, consumoHorasPropBab, consumoCombustiblePropEst, consumoHorasPropEst, consumoCombustibleBow, consumoHorasBow, consumoCombustibleGenBab, consumoHorasGenBab, consumoCombustibleGenEst, consumoHorasGenEst, total)
 
 	return consumos
-
 
 
 def genConsumoDia(request):
