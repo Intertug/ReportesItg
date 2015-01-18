@@ -29,11 +29,67 @@ def getDia(request):
 def genDia(request, date):
 
 	cursor = connection.cursor()
-	cursor.execute('select fechahora, codvariable, valor from datos where dayofyear(fechahora) = dayofyear("'+str(date)+'"); ')
+	cursor.execute('select codvariable, valor from datos where dayofyear(fechahora) = dayofyear("'+str(date)+'"); ')
 	rows = cursor.fetchall()
 	cursor.close()
 
-	return rows
+	prp000 = ()
+	prp001 = ()
+	prp002 = ()
+	prs000 = ()
+	prs001 = ()
+	prs002 = ()
+	bow001 = ()
+	bow002 = ()
+	gep001 = ()
+	gep002 = ()
+	ges001 = ()
+	ges002 = ()
+
+	for r in rows:
+		if r[0] == "PRP000":
+			prp000.push(r[1])
+		elif r[0] == "PRP001":
+			prp001.push(r[1])
+		elif r[0] == "PRP002":
+			prp002.push(r[1])
+		elif r[0] == "PRS000":
+			prs000.push(r[1])
+		elif r[0] == "PRS001":
+			prs001.push(r[1])
+		elif r[0] == "PRS002":
+			prs002.push(r[1])
+		elif r[0] == "BOW001":
+			bow001.push(r[1])
+		elif r[0] == "BOW002":
+			bow002.push(r[1])
+		elif r[0] == "GEP001":
+			gep001.push(r[1])
+		elif r[0] == "GEP002":
+			gep002.push(r[1])
+		elif r[0] == "GES001":
+			ges001.push(r[1])
+		elif r[0] == "GES002":
+			ges002.push(r[1])
+
+	consumoCombustiblePropBab = round((max(prp002) - min(prp002)) * 0.2641720512415584, 2) 
+	consumoHorasPropBab = round(len(prp000) * 0.51666 / 60.0, 2)
+
+	consumoCombustiblePropEst = round((max(prs002) - min(prs002)) * 0.2641720512415584, 2) 
+	consumoHorasPropEst = round(len(prs000) * 0.51666 / 60.0, 2)
+
+	consumoCombustibleBow = round((max(bow002) - min(bow002)) * 0.2641720512415584, 2) 
+	consumoHorasBow = round((max(bow001) - min(bow001)), 2)
+
+	consumoCombustibleGenBab = round((max(gep002) - min(gep002)) * 0.2641720512415584, 2) 
+	consumoHorasGenBab = round((max(gep001) - min(gep001)), 2)
+
+	consumoCombustibleGenEst = round((max(ges002) - min(ges002)) * 0.2641720512415584, 2) 
+	consumoHorasGenEst = round((max(ges001) - min(ges001)), 2)
+
+	consumos = (consumoCombustiblePropBab, consumoHorasPropBab, consumoCombustiblePropEst, consumoHorasPropEst, consumoCombustibleBow, consumoHorasBow, consumoCombustibleGenBab, consumoHorasGenBab, consumoCombustibleGenEst, consumoHorasGenEst)
+
+	return consumos
 
 
 
@@ -96,7 +152,8 @@ def genReporteDiaConsulta(fecha, dato):
 	cursor = connection.cursor()
 	cursor.execute('select valor from datos where rm ="'+str(rmGlobal)+'" and codvariable="'+str(dato)+'" and dayofyear(fechahora) = dayofyear("'+str(fecha)+'");')
 	rows = cursor.fetchall()
-	
+	cursor.close()
+
 	return rows
 
 def genReporteDia(dato):
@@ -104,7 +161,8 @@ def genReporteDia(dato):
 	cursor = connection.cursor()
 	cursor.execute('select valor from datos where rm ="'+str(rmGlobal)+'" and codvariable="'+str(dato)+'" and dayofyear(fechahora) = dayofyear(curdate());')
 	rows = cursor.fetchall()
-	
+	cursor.close()
+
 	return rows
 
 def genHorometroDiaConsulta(fecha, dato):
@@ -112,7 +170,8 @@ def genHorometroDiaConsulta(fecha, dato):
 	cursor = connection.cursor()
 	cursor.execute('select valor from datos where rm ="'+str(rmGlobal)+'" and codvariable="'+str(dato)+'" and dayofyear(fechahora) = dayofyear("'+str(fecha)+'") and valor > '+str(horometroVelMayorGlobal)+';')
 	rows = cursor.fetchall()
-	
+	cursor.close()
+
 	return rows
 
 def genHorometroDia(dato):
@@ -120,7 +179,8 @@ def genHorometroDia(dato):
 	cursor = connection.cursor()
 	cursor.execute('select valor from datos where rm ="'+str(rmGlobal)+'" and codvariable="'+str(dato)+'" and dayofyear(fechahora) = dayofyear(curdate()) and valor > '+str(horometroVelMayorGlobal)+';')
 	rows = cursor.fetchall()
-	
+	cursor.close()
+
 	return rows
 
 #Auxiliares 
