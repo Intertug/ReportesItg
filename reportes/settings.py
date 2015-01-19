@@ -61,7 +61,7 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'daq',
+        'NAME': 'daq2',
         'USER': 'root',
         'PASSWORD': 'variables',
     }

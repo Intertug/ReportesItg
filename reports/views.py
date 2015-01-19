@@ -3,11 +3,14 @@ from django.db import connection
 from reports.models import *
 from datetime import datetime
 
-rm = "barupacifico"
+rm = "vali"
 
 #Generadores de Templates
 
 def getReportes(request):
+
+	rmGlobal = rm
+
 	return render_to_response("reportes.html", locals())
 
 def getDia(request):
@@ -42,6 +45,12 @@ def getMes(request):
 
 def genMes(date):
 
+	ano = date.year
+	if date.month < 10:
+		mes = "0" + str(date.month)
+	else:
+		mes = date.month
+
 	cursor = connection.cursor()
 	cursor.execute('select fechahora, codvariable, valor from datos where month(fechahora) = month("'+str(date)+'");')
 	rows = cursor.fetchall()
@@ -49,8 +58,11 @@ def genMes(date):
 
 	dias = []
 
-	for dia in range(1, 32):
-		print dia
+	for dia in range(1, 32):		
+		if dia < 10:
+			dia = "0" + str(dia)
+		else:
+			dia = str(dia)
 
 		prp000 = []
 		prp001 = []
@@ -66,7 +78,13 @@ def genMes(date):
 		ges002 = []
 
 		for r in rows:
-			if str(r[0]) > "2015-01-" + str(dia) and str(r[0]) < "2015-01-" + str(dia + 1):
+			if int(dia) < 9:
+				auxdia = "0" + str(int(dia) + 1)
+			else:
+				auxdia = int(dia) + 1
+			#print ano, mes, dia, auxdia
+
+			if str(r[0]) > (str(ano) + "-" + str(mes) + "-" + str(dia)) and str(r[0]) < (str(ano) + "-" + str(mes) + "-" + str(auxdia)):
 				if r[1] == "PRP000":
 					if r[2] > 400:
 						prp000.append(r[2])
@@ -92,8 +110,8 @@ def genMes(date):
 				elif r[1] == "GES001":
 					ges001.append(r[2])
 				elif r[1] == "GES002":
-					ges002.append(r[2])
-
+					ges002.append(r[2])			
+					
 		if len(prp002) == 0:
 			consumoCombustiblePropBab = 0
 		else: 
