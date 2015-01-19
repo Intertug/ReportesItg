@@ -32,6 +32,8 @@ def getMes(request):
 		mes = request.GET['mes']
 		ano = request.GET['ano']
 		date = str(ano) + "-" + str(mes) + "-01"
+		date = date.split("-")
+		date = datetime(int(date[0]), int(date[1]), int(date[2]))
 	else:
 		date = datetime.now()
 
