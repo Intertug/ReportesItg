@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Reportes por día</title>
+</head>
+<body>
+	<table border="3">
+		<tr>
+			<th rowspan="2">Día</th>
+			<th colspan="2">Motor Propulsor Babor</th>
+			<th colspan="2">Motor Propulsor Estribor</th>
+			
+				<th colspan="2">Motor Propulsor Bowthruster</th>
+			
+			<th colspan="2">Motor Generador Babor</th>
+			<th colspan="2">Motor Generador Estribor</th>
+			<th rowspan="2">Consumo Total de Combustible</th>
+		</tr>
+		<tr>
+			<td>Consumo</td>
+			<td>Horas</td>
+			<td>Consumo</td>
+			<td>Horas</td>
+			
+				<td>Consumo</td>
+				<td>Horas</td>
+			
+			<td>Consumo</td>
+			<td>Horas</td>
+			<td>Consumo</td>
+			<td>Horas</td>
+		</tr>
+		
+			<tr>
+				<td>{{date}}</td>
+				<td>{{c.0}}</td>
+				<td>{{c.1}}</td>
+				<td>{{c.2}}</td>
+				<td>{{c.3}}</td>
+				
+					<td>{{c.4}}</td>
+					<td>{{c.5}}</td>
+				
+				<td>{{c.6}}</td>
+				<td>{{c.7}}</td>
+				<td>{{c.8}}</td>
+				<td>{{c.9}}</td>
+				<td>{{c.10}}</td>
+			</tr>
+		
+	</table>
+</body>
+</html>

@@ -29,8 +29,8 @@ def getDia(request):
 def getMes(request):
 
 	if 'mes' in request.GET:
-		mes = request.GET['mes']
-		ano = request.GET['ano']
+		mes  = request.GET['mes']
+		ano  = request.GET['ano']
 		date = str(ano) + "-" + str(mes) + "-01"
 		date = date.split("-")
 		date = datetime(int(date[0]), int(date[1]), int(date[2]))
@@ -42,6 +42,28 @@ def getMes(request):
 	consumo = genMes(date)
 
 	return render_to_response("mes.html", locals())
+
+def getReports(request):
+	return render_to_response("reportesitg.html", locals())	
+
+def getDay(request):
+	if 'date1' in request.GET and request.GET['date1'] != '':
+		date = request.GET['date1']
+	else:
+		date = datetime.now()
+	vessel = request.GET['vessel']
+	return render_to_response("day.html", locals())
+
+def getMonth(request):
+	if 'year' in request.GET and 'month' in request.GET:
+		year = request.GET['year']
+		month = request.GET['month']
+		date = str(year)+'-'+str(month)
+	else:
+		date = datetime.now()
+	if 'vessel2' in request.GET:
+		vessel = request.GET['vessel2']
+	return render_to_response("month.html", locals())
 
 #Generadores de consulta
 

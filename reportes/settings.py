@@ -63,7 +63,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'daq2',
         'USER': 'root',
-        'PASSWORD': 'variables',
+        'PASSWORD': '',
     }
 }
 
