@@ -7,12 +7,16 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     </head>
     <body>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-
                     <div class="page-header">
-                        <h1>{{vessel}} - <small>{{date}}</small></h1>
+                        <h1>
+                            {{ vessel }} -
+                            <small>
+                            Reporte generado a las {{ datereporter }}
+                            </small>
+                        </h1>
                     </div>
                     <table class="table table-bordered">
                         <tr>
@@ -21,7 +25,7 @@
                             <th colspan="2">Motor Propulsor Estribor</th>
 
                             <th colspan="2">Motor Propulsor Bowthruster</th>
-                            
+
                             <th colspan="2">Motor Generador Babor</th>
                             <th colspan="2">Motor Generador Estribor</th>
                             <th rowspan="2">Consumo Total de Combustible</th>

@@ -5,10 +5,9 @@
         <title>Reportes</title>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
     </head>
     <body>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                     <div class="page-header">
@@ -18,7 +17,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-                    <div class="col-xs-12 col-sm-6">
+                    <div class="col-xs-12 col-sm-4">
                         <div id="daypanel" class="panel panel-default">
                             <div class="panel-heading">Reporte por día</div>
                             <div class="panel-body">
@@ -45,7 +44,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6">
+                    <div class="col-xs-12 col-sm-4">
                         <div id="monthpanel" class="panel panel-default">
                             <div class="panel-heading">Reporte por mes</div>
                             <div class="panel-body">
@@ -54,15 +53,17 @@
                                         <div class="form-group">
                                             <label for="vessel2">Vessel: </label>
                                             <select id="vessel2" name="vessel2" class="form-control">
-                                                <option value="1">Baru Inti</option>
-                                                <option value="2">Baru Pacifico</option>
-                                                <option value="3">Vali</option>
-                                                <option value="4">Mistral</option>
+                                                <option value="Baru Inti">Baru Inti</option>
+                                                <option value="Baru Pacifico">Baru Pacifico</option>
+                                                <option value="Vali">Vali</option>
+                                                <option value="Mistral">Mistral</option>
                                             </select>
                                         </div>
-                                        <div class="form-group form-inline">
+                                        <div class="form-group">
                                             <label for="year">Año: </label>
                                             <input type="number" name="year" id="year" min="2014" class="form-control"/>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="month">Mes: </label>
                                             <select id="month" name="month" class="form-control">
                                                 <option value="1">1</option>
@@ -87,6 +88,35 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <div id="rangepanel" class="panel panel-default">
+                            <div class="panel-heading">Reporte por rango</div>
+                            <div class="panel-body">
+                                <div class="col-sm-10 col-sm-offset-1">
+                                    <form method="GET" action="/range" class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="vessel">Vessel: </label>
+                                            <select id="vessel" name="vessel" class="form-control">
+                                                <option value="Baru Inti">Baru Inti</option>
+                                                <option value="Baru Pacifico">Baru Pacifico</option>
+                                                <option value="Vali">Vali</option>
+                                                <option value="Mistral">Mistral</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="dateone">From: </label>
+                                            <input id="dateone" name="dateone" type="date" class="form-control"/>
+                                            <label for="datetwo">To: </label>
+                                            <input id="datetwo" name="datetwo" type="date" class="form-control"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Reporte" class="form-control"/>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -94,16 +124,11 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
         <script>
             $(document).ready(function () {
-                var height1 = $('#daypanel').height();
-                var height2 = $('#monthpanel').height();
-                if (height1 > height2) {
-                    $('#monthpanel').height(height1);
-                } else {
-                    $('#daypanel').height(height2);
-                }
+                var heightmax = Math.max($('#daypanel').height(), $('#monthpanel').height(), $('#rangepanel').height());
+                $('#daypanel').height(heightmax);
+                $('#monthpanel').height(heightmax);
+                $('#rangepanel').height(heightmax);
             });
         </script>
-
-
     </body>
 </html>

@@ -50,21 +50,40 @@ def getDay(request):
 	if 'date1' in request.GET and request.GET['date1'] != '':
 		date = request.GET['date1']
 	else:
-		date = datetime.now()
+		date = str(datetime.now()).split(' ')[0]
 	vessel = request.GET['vessel']
+	datereporter = datetime.now();
 	return render_to_response("day.html", locals())
 
 def getMonth(request):
 	if 'year' in request.GET and 'month' in request.GET:
-		year = request.GET['year']
-		month = request.GET['month']
-		date = str(year)+'-'+str(month)
+		if(request.GET['year'] != ''):
+			year = request.GET['year']
+		else:
+			datewtime	= str(datetime.now()).split('-')
+			year		= datewtime[0]
+		if(request.GET['month'] != ''):
+			month = request.GET['month']
+		else:
+			datewtime	= str(datetime.now()).split('-')
+			month 		= datewtime[1]
 	else:
-		date = datetime.now()
+		datewtime	= str(datetime.now()).split('-')
+		year		= datewtime[0]
+		month 		= datewtime[1]
+	date = str(year)+'-'+str(month)
 	if 'vessel2' in request.GET:
 		vessel = request.GET['vessel2']
+	datereporter = datetime.now();
 	return render_to_response("month.html", locals())
 
+def getRange(request):
+	if 'dateone' in request.GET and 'datetwo' in request.GET and 'vessel' in request.GET:
+		dateone = request.GET['dateone']
+		datetwo = request.GET['datetwo']
+		vessel = request.GET['vessel']
+	datereporter = datetime.now()
+	return render_to_response("range.html", locals())
 #Generadores de consulta
 
 def genMes(date):
