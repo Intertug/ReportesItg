@@ -12,7 +12,7 @@ def getReports(request):
 def getDay(request):
 
 	if 'date1' in request.GET and request.GET['date1'] != '':
-		date = request.GET['date1']
+		date = str(request.GET['date1'])
 	else:
 		date = str(datetime.now()).split(' ')[0]
 
@@ -29,9 +29,10 @@ def getDay(request):
 		raise ValueError("Incorrect data format, should be YYYY-MM-DD")
 
 	tomorrow = nextday
+	today = dateone
 	vessel = request.GET['vessel']
 	datereporter = datetime.now();
-	consumo = genDia(dateone, tomorrow, vessel)
+	consumo = genDia(today, tomorrow, vessel)
 
 	return render_to_response("day.html", locals())
 
