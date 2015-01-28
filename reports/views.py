@@ -18,6 +18,7 @@ def getDay(request):
 
 	vessel = request.GET['vessel']
 	datereporter = datetime.now();
+	consumo = genDia(date)
 
 	return render_to_response("day.html", locals())
 
