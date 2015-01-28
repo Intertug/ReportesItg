@@ -18,7 +18,7 @@ def getDay(request):
 
 	vessel = request.GET['vessel']
 	datereporter = datetime.now();
-	consumo = genDia(date)
+	consumo = genDia(date, vessel)
 
 	return render_to_response("day.html", locals())
 
@@ -184,10 +184,10 @@ def genMes(date):
 
 	return dias
 
-def genDia(date):
+def genDia(date, vessel):
 
 	cursor = connection.cursor()
-	cursor.execute('select codvariable, valor from datos where dayofyear(fechahora) = dayofyear("'+str(date)+'");')
+	cursor.execute('select DataCode, DataValue from [2160-DAQOnBoardData] where vesselname = \''+ str(vessel) +'\' and TimeString = "'+str(date)+'";')
 	rows = cursor.fetchall()
 	cursor.close()
 
