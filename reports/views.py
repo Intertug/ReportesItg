@@ -3,59 +3,26 @@ from django.db import connection
 from reports.models import *
 from datetime import datetime
 
-rm = "vali"
-
 #Generadores de Templates
 
-def getReportes(request):
-
-	rmGlobal = rm
-
-	return render_to_response("reportes.html", locals())
-
-def getDia(request):
-
-	if 'fecha' in request.GET:
-		date = request.GET['fecha']
-	else:
-		date = datetime.now()
-
-	rmGlobal = rm
-	
-	consumo = genDia(date)
-
-	return render_to_response("dia.html", locals())
-
-def getMes(request):
-
-	if 'mes' in request.GET:
-		mes  = request.GET['mes']
-		ano  = request.GET['ano']
-		date = str(ano) + "-" + str(mes) + "-01"
-		date = date.split("-")
-		date = datetime(int(date[0]), int(date[1]), int(date[2]))
-	else:
-		date = datetime.now()
-
-	rmGlobal = rm
-
-	consumo = genMes(date)
-
-	return render_to_response("mes.html", locals())
-
 def getReports(request):
+
 	return render_to_response("reportesitg.html", locals())	
 
 def getDay(request):
+
 	if 'date1' in request.GET and request.GET['date1'] != '':
 		date = request.GET['date1']
 	else:
 		date = str(datetime.now()).split(' ')[0]
+
 	vessel = request.GET['vessel']
 	datereporter = datetime.now();
+
 	return render_to_response("day.html", locals())
 
 def getMonth(request):
+
 	if 'year' in request.GET and 'month' in request.GET:
 		if(request.GET['year'] != ''):
 			year = request.GET['year']
@@ -71,19 +38,28 @@ def getMonth(request):
 		datewtime	= str(datetime.now()).split('-')
 		year		= datewtime[0]
 		month 		= datewtime[1]
+
 	date = str(year)+'-'+str(month)
+
 	if 'vessel2' in request.GET:
 		vessel = request.GET['vessel2']
+
 	datereporter = datetime.now();
+
 	return render_to_response("month.html", locals())
 
 def getRange(request):
+
 	if 'dateone' in request.GET and 'datetwo' in request.GET and 'vessel' in request.GET:
 		dateone = request.GET['dateone']
 		datetwo = request.GET['datetwo']
 		vessel = request.GET['vessel']
+
 	datereporter = datetime.now()
+
 	return render_to_response("range.html", locals())
+
+
 #Generadores de consulta
 
 def genMes(date):
