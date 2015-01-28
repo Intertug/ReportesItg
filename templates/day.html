@@ -19,8 +19,9 @@
                         </h1>
                     </div>
                     <table class="table table-bordered">
+                        <thead>
                         <tr>
-                            <th rowspan="2">Día</th>
+                            <th scope="row" rowspan="2">Día del reporte</th>
                             <th colspan="2">Motor Propulsor Babor</th>
                             <th colspan="2">Motor Propulsor Estribor</th>
 
@@ -44,8 +45,9 @@
                             <td>Consumo</td>
                             <td>Horas</td>
                         </tr>
+                        </thead>
                         <tr>
-                            <td>{{date}}</td>
+                            <td scope="row">{{date}}</td>
                             <td>{{consumo.0}}</td>
                             <td>{{consumo.1}}</td>
                             <td>{{consumo.2}}</td>
