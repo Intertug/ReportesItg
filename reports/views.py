@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response
 from django.db import connection
 from reports.models import *
-from datetime import datetime
+from datetime import datetime, timedelta, date
 
 #Generadores de Templates
 
@@ -16,9 +16,22 @@ def getDay(request):
 	else:
 		date = str(datetime.now()).split(' ')[0]
 
+	try:
+		#Convertimos la fechas de los input en dates de python
+		oneday = timedelta(days=1) #Creamos un delta de 1 dia
+		dateone = datetime.strptime(date, "%Y-%m-%d")
+		nextday = dateone+oneday #Le sumamos un dia a la fecha
+	
+		#Convertimos las fechas a string con formato AAAA-MM-DD
+		dateone = dateone.isoformat()[:10]
+		nextday = nextday.isoformat()[:10]
+	except ValueError:
+		raise ValueError("Incorrect data format, should be YYYY-MM-DD")
+
+	tomorrow = nextday
 	vessel = request.GET['vessel']
 	datereporter = datetime.now();
-	consumo = genDia(date, vessel)
+	consumo = genDia(dateone, tomorrow, vessel)
 
 	return render_to_response("day.html", locals())
 
@@ -198,10 +211,10 @@ def genMes(date):
 
 	return dias
 
-def genDia(date, vessel):
+def genDia(dateone, tomorrow, vessel):
 
 	cursor = connection.cursor()
-	cursor.execute('select DataCode, DataValue from [2160-DAQOnBoardData] where vesselname = \''+ str(vessel) +'\' and TimeString = "'+str(date)+'";')
+	cursor.execute('select DataCode, DataValue from [2160-DAQOnBoardData] where vesselname = \''+ str(vessel) +'\' and TimeString > "'+str(dateone)+'" and TimeString < "'+ str(tomorrow) +'";')
 	rows = cursor.fetchall()
 	cursor.close()
 
