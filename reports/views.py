@@ -219,7 +219,7 @@ def genMes(date):
 def genDia(dateone, tomorrow, vessel):
 
 	cursor = connection.cursor()
-	cursor.execute('select DataCode, DataValue from [2160-DAQOnBoardData] where vesselname = \''+ str(vessel) +'\' and TimeString > "'+str(dateone)+'" and TimeString < "'+ str(tomorrow) +'";')
+	cursor.execute('select DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  '+ str(vessel) +' and TimeString > "'+str(dateone)+'" and TimeString < "'+ str(tomorrow) +'";')
 	rows = cursor.fetchall()
 	cursor.close()
 
