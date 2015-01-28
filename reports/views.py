@@ -3,6 +3,8 @@ from django.db import connection
 from reports.models import *
 from datetime import datetime, timedelta, date
 
+remolcadores = {"Baru Inti": 34, "Baru Pacifico": 33, "Mistral": 28, "Vali": 23, "Carex": 5}
+
 #Generadores de Templates
 
 def getReports(request):
@@ -30,7 +32,9 @@ def getDay(request):
 
 	tomorrow = nextday
 	today = dateone
-	vessel = request.GET['vessel']
+	if request.GET['vessel'] in remolcadores:
+		nombre = request.GET['vessel']
+		vessel = remolcadores[nombre]
 	datereporter = datetime.now();
 	consumo = genDia(today, tomorrow, vessel)
 
