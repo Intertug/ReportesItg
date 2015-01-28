@@ -60,11 +60,26 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'daq2',
-        'USER': 'root',
-        'PASSWORD': '',
+        'ENGINE': 'sql_server.pyodbc', #190.242.119.122
+        'NAME': 'ITG-Sio',            
+        'USER': 'SioPlatformUsr',     
+        'PASSWORD': 'S10Pl@tf0rm',    
+        'HOST': 'MSSQL-PYTHON',       
+        'PORT': '1433',                      
+        'OPTIONS': {
+                'host_is_server': False,
+                'dsn': 'MSSQL-PYTHON',
+        },
     }
+}
+DATABASE_NAME = 'ITG-Sio'
+DATABASE_HOST = 'MSSQL-PYTHON'
+DATABASE_PORT = '1433'
+DATABASE_USER = 'SioPlatformUsr'
+DATABASE_PASSWORD = 'S10Pl@tf0rm'
+DATABASE_OPTIONS = {
+        'host_is_server': False,
+        'dsn': 'MSSQL-PYTHON',
 }
 
 # Internationalization
