@@ -52,12 +52,26 @@ def getMonth(request):
 def getRange(request):
 
 	if 'dateone' in request.GET and 'datetwo' in request.GET and 'vessel' in request.GET:
+		if(request.GET['dateone'] == '' or request.GET['datetwo'] == '' or request.GET['vessel'] == ''):
+			return render_to_response("reportesitg.html")
 		dateone = request.GET['dateone']
 		datetwo = request.GET['datetwo']
 		vessel = request.GET['vessel']
+		try:
+			#Convertimos la fechas de los input en dates de python
+			oneday = timedelta(days=1) #Creamos un delta de 1 dia
+			dateone = datetime.strptime(dateone, "%Y-%m-%d")
+			datetwo = datetime.strptime(datetwo, "%Y-%m-%d")
+			nextday = dateone+oneday #Le sumamos un dia a la fecha
+		
+			#Convertimos las fechas a string con formato AAAA-MM-DD
+			dateone = dateone.isoformat()[:10]
+			nextday = nextday.isoformat()[:10]
+			datetwo = datetwo.isoformat()[:10]
+		except ValueError:
+			raise ValueError("Incorrect data format, should be YYYY-MM-DD")
 
-	datereporter = datetime.now()
-
+	datereporter = date.today() #Fecha en que se realizo el reporte.
 	return render_to_response("range.html", locals())
 
 
