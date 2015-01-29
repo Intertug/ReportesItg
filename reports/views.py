@@ -132,11 +132,11 @@ def getRange(request):
 
 def genMes(dateone, datetwo, vessel):
 
-	ano = dateone.year
-	if dateone.month < 10:
-		mes = "0" + str(dateone.month)
-	else:
-		mes = dateone.month
+	#ano = dateone.year
+	#if dateone.month < 10:
+	#	mes = "0" + str(dateone.month)
+	#else:
+	#	mes = dateone.month
 
 	cursor = connection.cursor()
 	#cursor.execute('select TimeString, DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  '+ str(vessel) +' and TimeString > "'+str(dateone)+'" and TimeString < "'+ str(datetwo) +'";')
