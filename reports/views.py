@@ -98,7 +98,7 @@ def getMonth(request):
 
 	datereporter = datetime.now();
 	vesselname = request.GET['vessel2']
-	consumo = genMes(dateone, datetwo, vessel)
+	consumo = genMes(dateone, nextmonth, vessel)
 
 	return render_to_response("month.html", locals())
 
