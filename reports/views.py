@@ -16,8 +16,8 @@ def getReports(request):
 
 def getDay(request):
 	'''
-	crea la vista por defecto del día actual, si no 
-	crea la vista de la consulta para un día dado
+	crea la vista por defecto del dia actual, si no 
+	crea la vista de la consulta para un dia dado
 	'''
 
 	if 'date1' in request.GET and request.GET['date1'] != '':
