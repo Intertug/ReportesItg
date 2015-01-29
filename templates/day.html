@@ -18,7 +18,7 @@
                             </small>
                         </h1>
                     </div>
-                    <table class="table table-bordered">
+                    <table id="tableexcel" class="table table-bordered">
                         <tr>
                             <th rowspan="2">Día</th>
                             <th colspan="2">Motor Propulsor Babor</th>
@@ -88,7 +88,7 @@
                     </form>
                 </div>
                 <div class="col-xs-12 col-sm-2 col-sm-offset-1">
-                    <a href="/toexcel" class="btn btn-success">
+                    <a id="btnExport" class="btn btn-success">
                         <span class="glyphicon glyphicon-download-alt"></span> Excel
                     </a>
                 </div>
@@ -97,5 +97,16 @@
         </div>
         <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script src="static/jquery.battatech.excelexport.min.js"></script>
+        <script>
+        $(document).ready(function () {
+            $("#btnExport").click(function () {
+                    $("#tableexcel").battatech_excelexport({
+                        containerid: "tableexcel",
+                        //datatype: $datatype.Table
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
