@@ -2,6 +2,7 @@ from django.shortcuts import render, render_to_response
 from django.db import connection
 from reports.models import *
 from datetime import datetime, timedelta, date
+from monthdelta import monthdelta
 
 remolcadores = {"Baru Inti": 34, "Baru Pacifico": 33, "Mistral": 28, "Vali": 23, "Carex": 5}
 
@@ -78,7 +79,7 @@ def getMonth(request):
 
 	try:
 		#Convertimos la fechas de los input en dates de python
-		onemonth = timedelta(month=1) #Creamos un delta de 1 mes
+		onemonth = monthdelta(1) #Creamos un delta de 1 mes
 		dateone = datetime.strptime(date, "%Y-%m")
 		nextmonth = dateone+onemonth #Le sumamos un dia a la fecha
 	
@@ -139,7 +140,7 @@ def genMes(dateone, datetwo, vessel):
 
 	cursor = connection.cursor()
 	#cursor.execute('select TimeString, DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  '+ str(vessel) +' and TimeString > "'+str(dateone)+'" and TimeString < "'+ str(datetwo) +'";')
-	cursor.execute('exec SP_QueryOilConsuption('+str(vessel)+', '+str(dateone)+', '+str(datetwo)+')')
+	cursor.execute('exec SP_QueryOilConsuption('+str(vessel)+', "'+str(dateone)+'", "'+str(datetwo)+'")')
 	rows = cursor.fetchall()
 	cursor.close()
 
