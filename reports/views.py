@@ -138,7 +138,8 @@ def genMes(dateone, datetwo, vessel):
 		mes = dateone.month
 
 	cursor = connection.cursor()
-	cursor.execute('select DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  '+ str(vessel) +' and TimeString > "'+str(dateone)+'" and TimeString < "'+ str(datetwo) +'";')
+	#cursor.execute('select TimeString, DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  '+ str(vessel) +' and TimeString > "'+str(dateone)+'" and TimeString < "'+ str(datetwo) +'";')
+	cursor.execute('exec SP_QueryOilConsuption('+str(vessel)+', '+str(dateone)+', '+str(datetwo)+')')
 	rows = cursor.fetchall()
 	cursor.close()
 
