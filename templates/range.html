@@ -24,6 +24,50 @@
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                     <p>{{ dateone }} - {{ datetwo }}</p>
                     <p>{{ nextday }}</p>
+                    <table id="tableexcel" class="table table-bordered">
+                        <tr>
+                            <th rowspan="2">Día</th>
+                            <th colspan="2">Motor Propulsor Babor</th>
+                            <th colspan="2">Motor Propulsor Estribor</th>
+
+                            <th colspan="2">Motor Propulsor Bowthruster</th>
+
+                            <th colspan="2">Motor Generador Babor</th>
+                            <th colspan="2">Motor Generador Estribor</th>
+                            <th rowspan="2">Consumo Total de Combustible</th>
+                        </tr>
+                        <tr>
+                            <td>Consumo</td>
+                            <td>Horas</td>
+                            <td>Consumo</td>
+                            <td>Horas</td>
+
+                            <td>Consumo</td>
+                            <td>Horas</td>
+
+                            <td>Consumo</td>
+                            <td>Horas</td>
+                            <td>Consumo</td>
+                            <td>Horas</td>
+                        </tr>
+
+                        <tr>
+                            <td>{{ dateone }}</td>
+                            <td>{{c.0}}</td>
+                            <td>{{c.1}}</td>
+                            <td>{{c.2}}</td>
+                            <td>{{c.3}}</td>
+
+                            <td>{{c.4}}</td>
+                            <td>{{c.5}}</td>
+
+                            <td>{{c.6}}</td>
+                            <td>{{c.7}}</td>
+                            <td>{{c.8}}</td>
+                            <td>{{c.9}}</td>
+                            <td>{{c.10}}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
             <div class="row">
@@ -52,7 +96,7 @@
                     </form>
                 </div>
                 <div class="col-xs-12 col-sm-2">
-                    <a href="/toexcel" class="btn btn-success">
+                    <a id="btnExport" class="btn btn-success">
                         <span class="glyphicon glyphicon-download-alt"></span> Excel
                     </a>
                 </div>
@@ -61,5 +105,16 @@
     	
     	<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script src="static/jquery.battatech.excelexport.min.js"></script>
+        <script>
+        $(document).ready(function () {
+            $("#btnExport").click(function () {
+                    $("#tableexcel").battatech_excelexport({
+                        containerid: "tableexcel",
+                        //datatype: $datatype.Table
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
