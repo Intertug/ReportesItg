@@ -37,8 +37,10 @@ def getDay(request):
 	except ValueError:
 		raise ValueError("Incorrect data format, should be YYYY-MM-DD")
 
-	tomorrow = nextday
-	today = dateone
+	tomorrow = nextday.split('-')
+	tomorrow = tomorrow[0] + tomorrow[1] + tomorrow[2]
+	today = dateone.split('-')
+	today = today[0] + today[1] + today[2]
 	#sacamos  el id del remolcador
 	if request.GET['vessel'] in remolcadores:
 		nombre = request.GET['vessel']
