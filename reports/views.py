@@ -143,7 +143,8 @@ def genMes(dateone, datetwo, vessel):
 	cursor.execute("EXECUTE [SP_QueryOilConsuption] "+str(vessel)+", '"+str(dateone)+"', '"+str(datetwo)+"'")
 	rows = cursor.fetchall()
 	cursor.close()
-'''
+	
+	'''
 	dias = []
 
 	for dia in range(1, 32):		
@@ -249,8 +250,8 @@ def genMes(dateone, datetwo, vessel):
 		consumos = (consumoCombustiblePropBab, consumoHorasPropBab, consumoCombustiblePropEst, consumoHorasPropEst, consumoCombustibleBow, consumoHorasBow, consumoCombustibleGenBab, consumoHorasGenBab, consumoCombustibleGenEst, consumoHorasGenEst, total)
 
 		dias.append(consumos)							
-
-	return dias
+	'''
+	return rows
 
 def genDia(dateone, tomorrow, vessel):
 
@@ -347,5 +348,5 @@ def genDia(dateone, tomorrow, vessel):
 
 	total = consumoCombustiblePropBab + consumoCombustiblePropEst + consumoCombustibleBow + consumoCombustibleGenBab + consumoCombustibleGenEst
 	consumos = (consumoCombustiblePropBab, consumoHorasPropBab, consumoCombustiblePropEst, consumoHorasPropEst, consumoCombustibleBow, consumoHorasBow, consumoCombustibleGenBab, consumoHorasGenBab, consumoCombustibleGenEst, consumoHorasGenEst, total)
-'''
-	return rows
+
+	return consumos
