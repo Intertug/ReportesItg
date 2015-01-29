@@ -2,7 +2,7 @@ from django.shortcuts import render, render_to_response
 from django.db import connection
 from reports.models import *
 from datetime import datetime, timedelta, date
-from monthdelta import monthdelta
+from monthdelta import MonthDelta
 
 remolcadores = {"Baru Inti": 34, "Baru Pacifico": 33, "Mistral": 28, "Vali": 23, "Carex": 5}
 
@@ -79,7 +79,7 @@ def getMonth(request):
 
 	try:
 		#Convertimos la fechas de los input en dates de python
-		onemonth = monthdelta(1) #Creamos un delta de 1 mes
+		onemonth = MonthDelta(1) #Creamos un delta de 1 mes
 		dateone = datetime.strptime(date, "%Y-%m")
 		nextmonth = dateone+onemonth #Le sumamos un dia a la fecha
 	
