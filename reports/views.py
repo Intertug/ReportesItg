@@ -8,10 +8,17 @@ remolcadores = {"Baru Inti": 34, "Baru Pacifico": 33, "Mistral": 28, "Vali": 23,
 #Generadores de Templates
 
 def getReports(request):
+	'''
+	Crea la vista para la pagina de entrada
+	'''
 
 	return render_to_response("reportesitg.html", locals())	
 
 def getDay(request):
+	'''
+	crea la vista por defecto del día actual, si no 
+	crea la vista de la consulta para un día dado
+	'''
 
 	if 'date1' in request.GET and request.GET['date1'] != '':
 		date = str(request.GET['date1'])
@@ -32,15 +39,22 @@ def getDay(request):
 
 	tomorrow = nextday
 	today = dateone
+	#sacamos  el id del remolcador
 	if request.GET['vessel'] in remolcadores:
 		nombre = request.GET['vessel']
 		vessel = remolcadores[nombre]
+
 	datereporter = datetime.now();
+	vesselname = request.GET['vessel']
 	consumo = genDia(today, tomorrow, vessel)
 
 	return render_to_response("day.html", locals())
 
 def getMonth(request):
+	'''
+	crea la vista por defecto del mes actual, si no 
+	crea la vista de la consulta para un mes dado
+	'''
 
 	if 'year' in request.GET and 'month' in request.GET:
 		if(request.GET['year'] != ''):
@@ -60,10 +74,28 @@ def getMonth(request):
 
 	date = str(year)+'-'+str(month)
 
+	try:
+		#Convertimos la fechas de los input en dates de python
+		onemonth = timedelta(month=1) #Creamos un delta de 1 mes
+		dateone = datetime.strptime(date, "%Y-%m")
+		nextmonth = dateone+onemonth #Le sumamos un dia a la fecha
+	
+		#Convertimos las fechas a string con formato AAAA-MM
+		dateone = dateone.isoformat()[:7]
+		nextmonth = nextmonth.isoformat()[:7]
+	except ValueError:
+		raise ValueError("Incorrect data format, should be YYYY-MM")
+
 	if 'vessel2' in request.GET:
 		vessel = request.GET['vessel2']
 
+	if request.GET['vessel2'] in remolcadores:
+		nombre = request.GET['vessel2']
+		vessel = remolcadores[nombre]
+
 	datereporter = datetime.now();
+	vesselname = request.GET['vessel2']
+	consumo = genMes(dateone, datetwo, vessel)
 
 	return render_to_response("month.html", locals())
 
@@ -95,16 +127,16 @@ def getRange(request):
 
 #Generadores de consulta
 
-def genMes(date):
+def genMes(dateone, datetwo, vessel):
 
-	ano = date.year
-	if date.month < 10:
-		mes = "0" + str(date.month)
+	ano = dateone.year
+	if dateone.month < 10:
+		mes = "0" + str(dateone.month)
 	else:
-		mes = date.month
+		mes = dateone.month
 
 	cursor = connection.cursor()
-	cursor.execute('select fechahora, codvariable, valor from datos where month(fechahora) = month("'+str(date)+'");')
+	cursor.execute('select DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  '+ str(vessel) +' and TimeString > "'+str(dateone)+'" and TimeString < "'+ str(datetwo) +'";')
 	rows = cursor.fetchall()
 	cursor.close()
 

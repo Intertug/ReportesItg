@@ -11,16 +11,19 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                     <div class="page-header">
-                        <h1>{{vessel }} - <small>Reporte generado a las {{ datereporter }}</small></h1>
+                        <h1>{{vesselname }} - 
+                            <small>Reporte generado a las {{ datereporter }}
+                            </small>
+                        </h1>
                     </div>
                     <table id="tableexcel" class="table table-bordered">
                         <tr>
                             <th rowspan="2">Día</th>
                             <th colspan="2">Motor Propulsor Babor</th>
                             <th colspan="2">Motor Propulsor Estribor</th>
-
+                            {% if vesselname == "Baru Inti" or vesselname == "Baru Pacifico" %}
                             <th colspan="2">Motor Propulsor Bowthruster</th>
-
+                            {% endif %}
                             <th colspan="2">Motor Generador Babor</th>
                             <th colspan="2">Motor Generador Estribor</th>
                             <th rowspan="2">Consumo Total de Combustible</th>
@@ -30,32 +33,33 @@
                             <td>Horas</td>
                             <td>Consumo</td>
                             <td>Horas</td>
-
+                            {% if vesselname == "Baru Inti" or vesselname == "Baru Pacifico" %}
                             <td>Consumo</td>
                             <td>Horas</td>
-
+                            {% endif %}
                             <td>Consumo</td>
                             <td>Horas</td>
                             <td>Consumo</td>
                             <td>Horas</td>
                         </tr>
-
+                        {% for c in consumo %}
                         <tr>
                             <td>{{date}}</td>
                             <td>{{c.0}}</td>
                             <td>{{c.1}}</td>
                             <td>{{c.2}}</td>
                             <td>{{c.3}}</td>
-
+                            {% if vesselname == "Baru Inti" or vesselname == "Baru Pacifico" %}
                             <td>{{c.4}}</td>
                             <td>{{c.5}}</td>
-
+                            {% endif %}
                             <td>{{c.6}}</td>
                             <td>{{c.7}}</td>
                             <td>{{c.8}}</td>
                             <td>{{c.9}}</td>
                             <td>{{c.10}}</td>
                         </tr>
+                        {% endfor %}
                     </table>
                 </div>
             </div>

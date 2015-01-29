@@ -12,9 +12,9 @@
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                     <div class="page-header">
                         <h1>
-                            {{ vessel }} -
+                            {{ vesselname }} -
                             <small>
-                            Reporte generado a las {{ datereporter }}
+                            Reporte generado en {{ datereporter }}
                             </small>
                         </h1>
                     </div>
@@ -23,9 +23,9 @@
                             <th rowspan="2">Día</th>
                             <th colspan="2">Motor Propulsor Babor</th>
                             <th colspan="2">Motor Propulsor Estribor</th>
-
+                            {% if vesselname == "Baru Inti" or vesselname == "Baru Pacifico" %}
                             <th colspan="2">Motor Propulsor Bowthruster</th>
-
+                            {% endif %}
                             <th colspan="2">Motor Generador Babor</th>
                             <th colspan="2">Motor Generador Estribor</th>
                             <th rowspan="2">Consumo Total de Combustible</th>
@@ -35,10 +35,10 @@
                             <td>Horas</td>
                             <td>Consumo</td>
                             <td>Horas</td>
-
+                            {% if vesselname == "Baru Inti" or vesselname == "Baru Pacifico" %}
                             <td>Consumo</td>
                             <td>Horas</td>
-
+                            {% endif %}
                             <td>Consumo</td>
                             <td>Horas</td>
                             <td>Consumo</td>
@@ -50,10 +50,10 @@
                             <td>{{consumo.1}}</td>
                             <td>{{consumo.2}}</td>
                             <td>{{consumo.3}}</td>
-
+                            {% if vesselname == "Baru Inti" or vesselname == "Baru Pacifico" %}
                             <td>{{consumo.4}}</td>
                             <td>{{consumo.5}}</td>
-
+                            {% endif %}
                             <td>{{consumo.6}}</td>
                             <td>{{consumo.7}}</td>
                             <td>{{consumo.8}}</td>
@@ -65,7 +65,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-2 col-sm-offset-1">
-                    <a href="/reportes" class="btn btn-danger">
+                    <a href="/" class="btn btn-danger">
                         <span class="glyphicon glyphicon-chevron-left"></span> Regresar
                     </a>
                 </div>
