@@ -1,8 +1,7 @@
 from django.shortcuts import render, render_to_response
 from django.db import connection
 from reports.models import *
-from datetime import datetime, date, timedelta
-
+from datetime import datetime
 
 rm = "vali"
 
@@ -30,8 +29,8 @@ def getDia(request):
 def getMes(request):
 
 	if 'mes' in request.GET:
-		mes  = request.GET['mes']
-		ano  = request.GET['ano']
+		mes = request.GET['mes']
+		ano = request.GET['ano']
 		date = str(ano) + "-" + str(mes) + "-01"
 		date = date.split("-")
 		date = datetime(int(date[0]), int(date[1]), int(date[2]))
@@ -43,74 +42,6 @@ def getMes(request):
 	consumo = genMes(date)
 
 	return render_to_response("mes.html", locals())
-
-def getReports(request):
-
-	return render_to_response("reportesitg.html", locals())	
-
-def getDay(request):
-
-	if 'date1' in request.GET and request.GET['date1'] != '':
-		date = request.GET['date1']
-	else:
-		date = str(datetime.now()).split(' ')[0]
-
-	vessel = request.GET['vessel']
-	datereporter = datetime.now();
-	return render_to_response("day.html", locals())
-
-def getMonth(request):
-
-	if 'year' in request.GET and 'month' in request.GET:
-		if(request.GET['year'] != ''):
-			year = request.GET['year']
-		else:
-			datewtime	= str(datetime.now()).split('-')
-			year		= datewtime[0]
-		if(request.GET['month'] != ''):
-			month = request.GET['month']
-		else:
-			datewtime	= str(datetime.now()).split('-')
-			month 		= datewtime[1]
-	else:
-		datewtime	= str(datetime.now()).split('-')
-		year		= datewtime[0]
-		month 		= datewtime[1]
-
-	date = str(year)+'-'+str(month)
-
-	if 'vessel2' in request.GET:
-		vessel = request.GET['vessel2']
-
-	datereporter = datetime.now();
-
-	return render_to_response("month.html", locals())
-
-def getRange(request):
-
-	if 'dateone' in request.GET and 'datetwo' in request.GET and 'vessel' in request.GET:
-		if(request.GET['dateone'] == '' or request.GET['datetwo'] == '' or request.GET['vessel'] == ''):
-			return render_to_response("reportesitg.html")
-		dateone = request.GET['dateone']
-		datetwo = request.GET['datetwo']
-		vessel = request.GET['vessel']
-		try:
-			#Convertimos la fechas de los input en dates de python
-			oneday = timedelta(days=1) #Creamos un delta de 1 dia
-			dateone = datetime.strptime(dateone, "%Y-%m-%d")
-			datetwo = datetime.strptime(datetwo, "%Y-%m-%d")
-			nextday = dateone+oneday #Le sumamos un dia a la fecha
-		
-			#Convertimos las fechas a string con formato AAAA-MM-DD
-			dateone = dateone.isoformat()[:10]
-			nextday = nextday.isoformat()[:10]
-			datetwo = datetwo.isoformat()[:10]
-		except ValueError:
-			raise ValueError("Incorrect data format, should be YYYY-MM-DD")
-
-	datereporter = date.today() #Fecha en que se realizo el reporte.
-	return render_to_response("range.html", locals())
-
 
 #Generadores de consulta
 
