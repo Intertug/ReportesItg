@@ -140,8 +140,6 @@ def genMes(dateone, datetwo, vessel):
 	
 	consumo = []
 
-	for 
-
 	return consumo
 
 def genDia(dateone, tomorrow, vessel):
