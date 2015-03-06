@@ -98,7 +98,7 @@ def getMonth(request):
 
 	datereporter = datetime.now();
 	vesselname = request.GET['vessel2']
-	consumo = genMes(dateone, nextmonth, vessel)
+	consumo = genMes(dateone, vessel)
 
 	return render_to_response("month.html", locals())
 
@@ -129,14 +129,14 @@ def getRange(request):
 	datereporter = date.today() #Fecha en que se realizo el reporte.
 	return render_to_response("range.html", locals())
 
-def genMes(dateone, datetwo, vessel):
+def genMes(dateone, vessel):
 
 	#cursor.execute("select TimeString, DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  "+ str(vessel) +" and TimeString > '"+str(dateone)+"' and TimeString < '"+ str(datetwo) +"' and (DataCode = 'PRP000' or DataCode = 'PRP001' or DataCode = 'PRP002' or DataCode = 'PRS000' or DataCode = 'PRS001' or DataCode = 'PRS002' or DataCode = 'BOW001' or DataCode = 'BOW002' or DataCode = 'GEP001' or DataCode = 'GEP002' or DataCode = 'GES001' or DataCode = 'GES002');")
 	consumos = []
 	i = 0
 	dia = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"]
 	dateone = dateone + "-" + dia[0]
-	datetwo = datetwo + "-" + dia[-1]
+	datetwo = dateone + "-" + dia[-1]
 	
 	while (dateone <= datetwo):
 
