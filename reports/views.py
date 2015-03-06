@@ -239,7 +239,7 @@ def genMes(dateone, vessel):
 			consumoHorasGenEst = round((max(ges001) - min(ges001)), 2)
 
 		total = consumoCombustiblePropBab + consumoCombustiblePropEst + consumoCombustibleBow + consumoCombustibleGenBab + consumoCombustibleGenEst
-		consumos.append([consumoCombustiblePropBab, consumoHorasPropBab, consumoCombustiblePropEst, consumoHorasPropEst, consumoCombustibleBow, consumoHorasBow, consumoCombustibleGenBab, consumoHorasGenBab, consumoCombustibleGenEst, consumoHorasGenEst, total])
+		consumos.append([diaUno, consumoCombustiblePropBab, consumoHorasPropBab, consumoCombustiblePropEst, consumoHorasPropEst, consumoCombustibleBow, consumoHorasBow, consumoCombustibleGenBab, consumoHorasGenBab, consumoCombustibleGenEst, consumoHorasGenEst, total])
 
 		diaUno = datetime.strptime(diaUno, "%Y-%m-%d")
 		diaUno = diaUno + oneday

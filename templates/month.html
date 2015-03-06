@@ -19,7 +19,6 @@
                             </small>
                         </h1>
                     </div>
-                    {{consumo}}
                     <table id="tableexcel" class="table table-bordered">
                         <tr>
                             <th rowspan="2">Día</th>
@@ -48,20 +47,20 @@
                         </tr>
                         {% for c in consumo %}
                         <tr>
-                            <td>{{date}}</td>
                             <td>{{c.0}}</td>
                             <td>{{c.1}}</td>
                             <td>{{c.2}}</td>
                             <td>{{c.3}}</td>
-                            {% if vesselname == "Baru Inti" or vesselname == "Baru Pacifico" %}
                             <td>{{c.4}}</td>
+                            {% if vesselname == "Baru Inti" or vesselname == "Baru Pacifico" %}
                             <td>{{c.5}}</td>
-                            {% endif %}
                             <td>{{c.6}}</td>
+                            {% endif %}
                             <td>{{c.7}}</td>
                             <td>{{c.8}}</td>
-                            <td>{{c.9}}</td>
+                            <td>{{c.8}}</td>
                             <td>{{c.10}}</td>
+                            <td>{{c.11}}</td>
                         </tr>
                         {% endfor %}
                     </table>
@@ -69,7 +68,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-2 col-sm-offset-1">
-                    <a href="/reportes" class="btn btn-danger">
+                    <a href="/" class="btn btn-danger">
                         <span class="glyphicon glyphicon-chevron-left"></span> Regresar
                     </a>
                 </div>
