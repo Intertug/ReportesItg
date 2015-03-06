@@ -133,15 +133,13 @@ def genMes(dateone, vessel):
 
 	#cursor.execute("select TimeString, DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  "+ str(vessel) +" and TimeString > '"+str(dateone)+"' and TimeString < '"+ str(datetwo) +"' and (DataCode = 'PRP000' or DataCode = 'PRP001' or DataCode = 'PRP002' or DataCode = 'PRS000' or DataCode = 'PRS001' or DataCode = 'PRS002' or DataCode = 'BOW001' or DataCode = 'BOW002' or DataCode = 'GEP001' or DataCode = 'GEP002' or DataCode = 'GES001' or DataCode = 'GES002');")
 	consumos = []
-	i = 0
-	dia = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"]
-	diaUno = dateone + "-" + dia[0]
-	diaDos = dateone + "-" + dia[-1]
+	diaUno = dateone + "-" + "01"
+	diaDos = dateone + "-" + "31"
+	oneday = timedelta(days=1) #Creamos un delta de 1 dia
 	
 	while (diaUno <= diaDos):
 
 		#Convertimos la fechas de los input en dates de python
-		oneday = timedelta(days=1) #Creamos un delta de 1 dia
 		diaUno = datetime.strptime(diaUno, "%Y-%m-%d")
 		tomorrow = diaUno+oneday #Le sumamos un dia a la fecha
 	
@@ -243,8 +241,7 @@ def genMes(dateone, vessel):
 		total = consumoCombustiblePropBab + consumoCombustiblePropEst + consumoCombustibleBow + consumoCombustibleGenBab + consumoCombustibleGenEst
 		consumos.append([consumoCombustiblePropBab, consumoHorasPropBab, consumoCombustiblePropEst, consumoHorasPropEst, consumoCombustibleBow, consumoHorasBow, consumoCombustibleGenBab, consumoHorasGenBab, consumoCombustibleGenEst, consumoHorasGenEst, total])
 
-		i = i + 1
-		diaUno = diaUno + "-" + dia[i]
+		diaUno = diaUno + oneday
 
 	return consumos
 
