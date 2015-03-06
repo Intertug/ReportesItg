@@ -243,6 +243,7 @@ def genMes(dateone, vessel):
 
 		diaUno = datetime.strptime(diaUno, "%Y-%m-%d")
 		diaUno = diaUno + oneday
+		diaUno = diaUno.isoformat()[:10]
 
 	return consumos
 
