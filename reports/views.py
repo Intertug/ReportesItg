@@ -135,22 +135,22 @@ def genMes(dateone, vessel):
 	consumos = []
 	i = 0
 	dia = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"]
-	dateone = dateone + "-" + dia[0]
-	datetwo = dateone + "-" + dia[-1]
+	diaUno = dateone + "-" + dia[0]
+	diaDos = dateone + "-" + dia[-1]
 	
-	while (dateone <= datetwo):
+	while (diaUno <= diaDos):
 
 		#Convertimos la fechas de los input en dates de python
 		oneday = timedelta(days=1) #Creamos un delta de 1 dia
-		dateone = datetime.strptime(dateone, "%Y-%m-%d")
-		tomorrow = dateone+oneday #Le sumamos un dia a la fecha
+		diaUno = datetime.strptime(diaUno, "%Y-%m-%d")
+		tomorrow = diaUno+oneday #Le sumamos un dia a la fecha
 	
 		#Convertimos las fechas a string con formato AAAA-MM-DD
-		dateone = dateone.isoformat()[:10]
+		diaUno = diaUno.isoformat()[:10]
 		tomorrow = tomorrow.isoformat()[:10]
 
 		cursor = connection.cursor()
-		cursor.execute('select DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  '+ str(vessel) +' and TimeString > "'+str(dateone)+'" and TimeString < "'+ str(tomorrow) +'";')
+		cursor.execute('select DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  '+ str(vessel) +' and TimeString > "'+str(diaUno)+'" and TimeString < "'+ str(tomorrow) +'";')
 		rows = cursor.fetchall()
 		cursor.close()
 
@@ -244,7 +244,7 @@ def genMes(dateone, vessel):
 		consumos.append([consumoCombustiblePropBab, consumoHorasPropBab, consumoCombustiblePropEst, consumoHorasPropEst, consumoCombustibleBow, consumoHorasBow, consumoCombustibleGenBab, consumoHorasGenBab, consumoCombustibleGenEst, consumoHorasGenEst, total])
 
 		i = i + 1
-		dateone = dateone + "-" + dia[i]
+		diaUno = diaUno + "-" + dia[i]
 
 	return consumos
 
