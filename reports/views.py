@@ -4,7 +4,7 @@ from reports.models import *
 from datetime import datetime, timedelta, date
 from monthdelta import MonthDelta
 
-remolcadores = {"Baru Inti": 34, "Baru Pacifico": 33, "Mistral": 28, "Vali": 23, "Carex": 5}
+remolcadores = {"Baru Inti": 34, "Baru Pacifico": 33, "Mistral": 28, "Vali": 23, "Alisios": 29, "Cristina": 6}
 
 #Generadores de Templates
 
