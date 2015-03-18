@@ -148,7 +148,7 @@ def genMes(dateone, vessel):
 		tomorrow = tomorrow.isoformat()[:10]
 
 		cursor = connection.cursor()
-		cursor.execute('select DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  '+ str(vessel) +' and TimeString > "'+str(diaUno)+'" and TimeString < "'+ str(tomorrow) +'";')
+		cursor.execute('select DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  '+ str(vessel) +' and TimeString > "'+str(diaUno)+'060000" and TimeString < "'+ str(tomorrow) +'060000";')
 		rows = cursor.fetchall()
 		cursor.close()
 
