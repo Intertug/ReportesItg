@@ -58,7 +58,7 @@ def ApiReporte(request):
 		"vesselName": vesselname,
 		"vesselID": remolcadores[vesselname],
 		"reportName": "Reporte de Consumo",
-		"reporData": []
+		"reportData": []
 	}
 
 	for data in range(len(consumo)):
