@@ -3,10 +3,59 @@ from django.db import connection
 from reports.models import *
 from datetime import datetime, timedelta, date
 from monthdelta import MonthDelta
+import json
+from django.http import HttpResponse
 
-remolcadores = {"Baru Inti": 34, "Baru Pacifico": 33, "Mistral": 28, "Vali": 23, "Alisios": 29, "Cristina": 6}
+remolcadores = {"Baru Inti": 34, "Baru Pacifico": 33, "Mistral": 28, "Vali": 23, "Alisios": 29, "Cristina": 6, "Tanok": 26, "Kin": 27}
 
 #Generadores de Templates
+
+def ApiReporte(request):
+
+	if 'year' in request.GET and 'month' in request.GET:
+		if(request.GET['year'] != ''):
+			year = request.GET['year']
+		else:
+			datewtime	= str(datetime.now()).split('-')
+			year		= datewtime[0]
+		if(request.GET['month'] != ''):
+			month = request.GET['month']
+		else:
+			datewtime	= str(datetime.now()).split('-')
+			month 		= datewtime[1]
+	else:
+		datewtime	= str(datetime.now()).split('-')
+		year		= datewtime[0]
+		month 		= datewtime[1]
+
+	date = str(year)+'-'+str(month)
+
+	try:
+		#Convertimos la fechas de los input en dates de python
+		onemonth = MonthDelta(1) #Creamos un delta de 1 mes
+		dateone = datetime.strptime(date, "%Y-%m")
+		nextmonth = dateone+onemonth #Le sumamos un dia a la fecha
+	
+		#Convertimos las fechas a string con formato AAAA-MM
+		dateone = dateone.isoformat()[:7]
+		nextmonth = nextmonth.isoformat()[:7]
+	except ValueError:
+		raise ValueError("Incorrect data format, should be YYYY-MM")
+
+	if 'vessel2' in request.GET:
+		vessel = request.GET['vessel2']
+
+	if request.GET['vessel2'] in remolcadores:
+		nombre = request.GET['vessel2']
+		vessel = remolcadores[nombre]
+
+	datereporter = datetime.now();
+	vesselname = request.GET['vessel2']
+	consumo = genMes(dateone, vessel)
+
+	json_data = json.dumps(consumo)
+
+	return HttpResponse(json_data, content_type='application/json')
 
 def getReports(request):
 	'''
@@ -250,7 +299,7 @@ def genMes(dateone, vessel):
 def genDia(dateone, tomorrow, vessel):
 
 	cursor = connection.cursor()
-	cursor.execute('select DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  '+ str(vessel) +' and TimeString > "'+str(dateone)+'" and TimeString < "'+ str(tomorrow) +'";')
+	cursor.execute('select DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  '+ str(vessel) +' and TimeString > "'+str(dateone)+'060000" and TimeString < "'+ str(tomorrow) +'060000";')
 	rows = cursor.fetchall()
 	cursor.close()
 
