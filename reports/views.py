@@ -58,8 +58,26 @@ def ApiReporte(request):
 		"vesselName": vesselname,
 		"vesselID": remolcadores[vesselname],
 		"reportName": "Reporte de Consumo",
-		"reporData": consumo
+		"reporData": []
 	}
+
+	for data in range(len(consumo)):
+		reportdata = {
+
+			"day": consumo[data][0],
+			"CMPB": consumo[data][1],
+			"HMPB": consumo[data][2],
+			"CMPE": consumo[data][3],
+			"HMPE": consumo[data][4],
+			"CMBW": consumo[data][5],
+			"HMBW": consumo[data][6],
+			"CMGB": consumo[data][7],
+			"HMGB": consumo[data][8],
+			"CMGE": consumo[data][9],
+			"HMGE": consumo[data][10],
+			"total": consumo[data][11]
+		}
+		reporte['reportData'].append(reportdata)
 
 	json_data = json.dumps(reporte)
 
