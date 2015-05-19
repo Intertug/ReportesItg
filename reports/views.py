@@ -53,7 +53,30 @@ def ApiReporte(request):
 	vesselname = request.GET['vessel2']
 	consumo = genMes(dateone, vessel)
 
-	json_data = json.dumps(consumo)
+	reporte = {
+
+		"vesselName": vesselname,
+		"vesselID": remolcadores[vesselname],
+		"reportName": "Reporte de Consumo", 
+		"reportData": {}
+
+	}
+
+	for vessel in range(len(consumo)):
+		reporte.append["reportData"]({"day": vessel[0],
+			"CMPB": vessel[1],
+			"HMPB": vessel[2],
+			"CMPE": vessel[3],
+			"HMPE": vessel[4],
+			"CMBW": vessel[5],
+			"HMBW": vessel[6],
+			"CMGB": vessel[7],
+			"HMGB": vessel[8],
+			"CMGE": vessel[9],
+			"HMGE": vessel[10],
+			"total": vessel[11]})
+
+	json_data = json.dumps(reporte)
 
 	return HttpResponse(json_data, content_type='application/json')
 
