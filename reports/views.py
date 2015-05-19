@@ -53,17 +53,14 @@ def ApiReporte(request):
 	vesselname = request.GET['vessel2']
 	consumo = genMes(dateone, vessel)
 
-	reporte = {
-
-		"vesselName": vesselname,
-		"vesselID": remolcadores[vesselname],
-		"reportName": "Reporte de Consumo", 
-		"reportData": {}
-
-	}
+	reporte = {}
 
 	for vessel in range(len(consumo)):
-		reporte.append["reportData"]({"day": vessel[0],
+		reporte.append({
+			"vesselName": vesselname,
+			"vesselID": remolcadores[vesselname],
+			"reportName": "Reporte de Consumo", 
+			"day": vessel[0],
 			"CMPB": vessel[1],
 			"HMPB": vessel[2],
 			"CMPE": vessel[3],
