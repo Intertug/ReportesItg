@@ -3,7 +3,7 @@ from django.db import connection
 from reports.models import *
 from datetime import datetime
 
-rm = "vali"
+rm = "xxx"
 
 #Generadores de Templates
 
