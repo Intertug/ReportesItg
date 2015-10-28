@@ -6,7 +6,7 @@ from monthdelta import MonthDelta
 import json
 from django.http import HttpResponse
 
-remolcadores = {"Baru Inti": 34, "Baru Pacifico": 33, "Mistral": 28, "Vali": 23, "Alisios": 29, "Cristina": 6, "Tanok": 26, "Kin": 27}
+remolcadores = {"Baru Inti": 34, "Baru Pacifico": 33, "Mistral": 28, "Vali": 23, "Alisios": 29, "Cristina": 6, "Tanok": 26, "Kin": 27, "Eos II": 9, "Frey": 10, "Kronos": 12, "Oceanos": 15}
 
 #Generadores de Templates
 
@@ -237,98 +237,190 @@ def genDia(dateone, tomorrow, vessel):
 	cursor = connection.cursor()
 	if(vessel == "Baru Pacifico" or vessel == "Baru Inti" or vessel == "Mistral" or vessel == "Vali"):
 		cursor.execute('select DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  '+ str(vessel) +' and TimeString > "'+str(dateone)+'060000" and TimeString < "'+ str(tomorrow) +'060000";')
+		rows = cursor.fetchall()
+		cursor.close()
+
+		prp000 = []
+		prp001 = []
+		prp002 = []
+		prs000 = []
+		prs001 = []
+		prs002 = []
+		bow001 = []
+		bow002 = []
+		gep001 = []
+		gep002 = []
+		ges001 = []
+		ges002 = []
+
+		for r in rows:
+			if r[0] == "PRP000":
+				if r[1] > 400:
+					prp000.append(r[1])
+			elif r[0] == "PRP001":
+				prp001.append(r[1])
+			elif r[0] == "PRP002":
+				prp002.append(r[1])
+			elif r[0] == "PRS000":
+				if r[1] > 400:
+					prs000.append(r[1])
+			elif r[0] == "PRS001":
+				prs001.append(r[1])
+			elif r[0] == "PRS002":
+				prs002.append(r[1])
+			elif r[0] == "BOW001":
+				bow001.append(r[1])
+			elif r[0] == "BOW002":
+				bow002.append(r[1])
+			elif r[0] == "GEP001":
+				gep001.append(r[1])
+			elif r[0] == "GEP002":
+				gep002.append(r[1])
+			elif r[0] == "GES001":
+				ges001.append(r[1])
+			elif r[0] == "GES002":
+				ges002.append(r[1])
+
+		if len(prp002) == 0:
+			consumoCombustiblePropBab = 0
+		else: 
+			consumoCombustiblePropBab = round((max(prp002) - min(prp002)) * 0.2641720512415584, 2)	
+		if len(prp000) == 0:
+			consumoHorasPropBab = 0
+	 	else:
+			consumoHorasPropBab = round(len(prp000) * 0.51666 / 60.0, 2)
+
+		if len(prs002) == 0:
+			consumoCombustiblePropEst = 0
+		else:
+			consumoCombustiblePropEst = round((max(prs002) - min(prs002)) * 0.2641720512415584, 2) 
+		if len(prs000) == 0:
+			consumoHorasPropEst = 0
+		else:
+			consumoHorasPropEst = round(len(prs000) * 0.51666 / 60.0, 2)
+
+		if len(bow002) == 0:
+			consumoCombustibleBow = 0
+		else:
+			consumoCombustibleBow = round((max(bow002) - min(bow002)) * 0.2641720512415584, 2) 
+		if len(bow001) == 0:
+			consumoHorasBow = 0
+		else:
+			consumoHorasBow = round((max(bow001) - min(bow001)), 2)
+
+		if len(gep002) == 0:
+			consumoCombustibleGenBab = 0
+		else:
+			consumoCombustibleGenBab = round((max(gep002) - min(gep002)) * 0.2641720512415584, 2) 
+		if len(gep001) == 0:
+			consumoHorasGenBab = 0
+		else:
+			consumoHorasGenBab = round((max(gep001) - min(gep001)), 2)
+
+		if len(ges002) == 0:
+			consumoCombustibleGenEst = 0
+		else:
+			consumoCombustibleGenEst = round((max(ges002) - min(ges002)) * 0.2641720512415584, 2) 
+		if len(ges001) == 0:
+			consumoHorasGenEst = 0
+		else:
+			consumoHorasGenEst = round((max(ges001) - min(ges001)), 2)
+
+		total = consumoCombustiblePropBab + consumoCombustiblePropEst + consumoCombustibleBow + consumoCombustibleGenBab + consumoCombustibleGenEst
+		consumos = (consumoCombustiblePropBab, consumoHorasPropBab, consumoCombustiblePropEst, consumoHorasPropEst, consumoCombustibleBow, consumoHorasBow, consumoCombustibleGenBab, consumoHorasGenBab, consumoCombustibleGenEst, consumoHorasGenEst, total)
+
 	else:
 		cursor.execute('select DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  '+ str(vessel) +' and TimeString > "'+str(dateone)+'" and TimeString < "'+ str(tomorrow) +'";')
-	rows = cursor.fetchall()
-	cursor.close()
+		rows = cursor.fetchall()
+		cursor.close()
 
-	prp000 = []
-	prp001 = []
-	prp002 = []
-	prs000 = []
-	prs001 = []
-	prs002 = []
-	bow001 = []
-	bow002 = []
-	gep001 = []
-	gep002 = []
-	ges001 = []
-	ges002 = []
+		prp000 = []
+		prp001 = []
+		prp002 = []
+		prs000 = []
+		prs001 = []
+		prs002 = []
+		bow001 = []
+		bow002 = []
+		gep001 = []
+		gep002 = []
+		ges001 = []
+		ges002 = []
 
-	for r in rows:
-		if r[0] == "PRP000":
-			if r[1] > 400:
-				prp000.append(r[1])
-		elif r[0] == "PRP001":
-			prp001.append(r[1])
-		elif r[0] == "PRP002":
-			prp002.append(r[1])
-		elif r[0] == "PRS000":
-			if r[1] > 400:
-				prs000.append(r[1])
-		elif r[0] == "PRS001":
-			prs001.append(r[1])
-		elif r[0] == "PRS002":
-			prs002.append(r[1])
-		elif r[0] == "BOW001":
-			bow001.append(r[1])
-		elif r[0] == "BOW002":
-			bow002.append(r[1])
-		elif r[0] == "GEP001":
-			gep001.append(r[1])
-		elif r[0] == "GEP002":
-			gep002.append(r[1])
-		elif r[0] == "GES001":
-			ges001.append(r[1])
-		elif r[0] == "GES002":
-			ges002.append(r[1])
+		for r in rows:
+			if r[0] == "PRP000":
+				if r[1] > 400:
+					prp000.append(r[1])
+			elif r[0] == "PRP001":
+				prp001.append(r[1])
+			elif r[0] == "PRP002":
+				prp002.append(r[1])
+			elif r[0] == "PRS000":
+				if r[1] > 400:
+					prs000.append(r[1])
+			elif r[0] == "PRS001":
+				prs001.append(r[1])
+			elif r[0] == "PRS002":
+				prs002.append(r[1])
+			elif r[0] == "BOW001":
+				bow001.append(r[1])
+			elif r[0] == "BOW002":
+				bow002.append(r[1])
+			elif r[0] == "GEP001":
+				gep001.append(r[1])
+			elif r[0] == "GEP002":
+				gep002.append(r[1])
+			elif r[0] == "GES001":
+				ges001.append(r[1])
+			elif r[0] == "GES002":
+				ges002.append(r[1])
 
-	if len(prp002) == 0:
-		consumoCombustiblePropBab = 0
-	else: 
-		consumoCombustiblePropBab = round((max(prp002) - min(prp002)) * 0.2641720512415584, 2)	
-	if len(prp000) == 0:
-		consumoHorasPropBab = 0
- 	else:
-		consumoHorasPropBab = round(len(prp000) * 0.51666 / 60.0, 2)
+		if len(prp002) == 0:
+			consumoCombustiblePropBab = 0
+		else: 
+			consumoCombustiblePropBab = round((max(prp002) - min(prp002)) * 0.2641720512415584, 2)	
+		if len(prp000) == 0:
+			consumoHorasPropBab = 0
+	 	else:
+			consumoHorasPropBab = round((max(prp001) - min(prp001)), 2)
 
-	if len(prs002) == 0:
-		consumoCombustiblePropEst = 0
-	else:
-		consumoCombustiblePropEst = round((max(prs002) - min(prs002)) * 0.2641720512415584, 2) 
-	if len(prs000) == 0:
-		consumoHorasPropEst = 0
-	else:
-		consumoHorasPropEst = round(len(prs000) * 0.51666 / 60.0, 2)
+		if len(prs002) == 0:
+			consumoCombustiblePropEst = 0
+		else:
+			consumoCombustiblePropEst = round((max(prs002) - min(prs002)) * 0.2641720512415584, 2) 
+		if len(prs000) == 0:
+			consumoHorasPropEst = 0
+		else:
+			consumoHorasPropEst = round((max(prs001) - min(prs001)), 2)
 
-	if len(bow002) == 0:
-		consumoCombustibleBow = 0
-	else:
-		consumoCombustibleBow = round((max(bow002) - min(bow002)) * 0.2641720512415584, 2) 
-	if len(bow001) == 0:
-		consumoHorasBow = 0
-	else:
-		consumoHorasBow = round((max(bow001) - min(bow001)), 2)
+		if len(bow002) == 0:
+			consumoCombustibleBow = 0
+		else:
+			consumoCombustibleBow = round((max(bow002) - min(bow002)) * 0.2641720512415584, 2) 
+		if len(bow001) == 0:
+			consumoHorasBow = 0
+		else:
+			consumoHorasBow = round((max(bow001) - min(bow001)), 2)
 
-	if len(gep002) == 0:
-		consumoCombustibleGenBab = 0
-	else:
-		consumoCombustibleGenBab = round((max(gep002) - min(gep002)) * 0.2641720512415584, 2) 
-	if len(gep001) == 0:
-		consumoHorasGenBab = 0
-	else:
-		consumoHorasGenBab = round((max(gep001) - min(gep001)), 2)
+		if len(gep002) == 0:
+			consumoCombustibleGenBab = 0
+		else:
+			consumoCombustibleGenBab = round((max(gep002) - min(gep002)) * 0.2641720512415584, 2) 
+		if len(gep001) == 0:
+			consumoHorasGenBab = 0
+		else:
+			consumoHorasGenBab = round((max(gep001) - min(gep001)), 2)
 
-	if len(ges002) == 0:
-		consumoCombustibleGenEst = 0
-	else:
-		consumoCombustibleGenEst = round((max(ges002) - min(ges002)) * 0.2641720512415584, 2) 
-	if len(ges001) == 0:
-		consumoHorasGenEst = 0
-	else:
-		consumoHorasGenEst = round((max(ges001) - min(ges001)), 2)
+		if len(ges002) == 0:
+			consumoCombustibleGenEst = 0
+		else:
+			consumoCombustibleGenEst = round((max(ges002) - min(ges002)) * 0.2641720512415584, 2) 
+		if len(ges001) == 0:
+			consumoHorasGenEst = 0
+		else:
+			consumoHorasGenEst = round((max(ges001) - min(ges001)), 2)
 
-	total = consumoCombustiblePropBab + consumoCombustiblePropEst + consumoCombustibleBow + consumoCombustibleGenBab + consumoCombustibleGenEst
-	consumos = (consumoCombustiblePropBab, consumoHorasPropBab, consumoCombustiblePropEst, consumoHorasPropEst, consumoCombustibleBow, consumoHorasBow, consumoCombustibleGenBab, consumoHorasGenBab, consumoCombustibleGenEst, consumoHorasGenEst, total)
+		total = consumoCombustiblePropBab + consumoCombustiblePropEst + consumoCombustibleBow + consumoCombustibleGenBab + consumoCombustibleGenEst
+		consumos = (consumoCombustiblePropBab, consumoHorasPropBab, consumoCombustiblePropEst, consumoHorasPropEst, consumoCombustibleBow, consumoHorasBow, consumoCombustibleGenBab, consumoHorasGenBab, consumoCombustibleGenEst, consumoHorasGenEst, total)
 
 	return consumos
