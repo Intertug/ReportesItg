@@ -281,7 +281,7 @@ def genMes(dateone, vessel):
 			if len(prp000) == 0:
 				consumoHorasPropBab = 0
 		 	else:
-				consumoHorasPropBab = round(len(prp000) * 0.51666 / 60.0, 2)
+				consumoHorasPropBab = round((max(prp001) - min(prp001)), 2)
 
 			if len(prs002) == 0:
 				consumoCombustiblePropEst = 0
@@ -290,7 +290,7 @@ def genMes(dateone, vessel):
 			if len(prs000) == 0:
 				consumoHorasPropEst = 0
 			else:
-				consumoHorasPropEst = round(len(prs000) * 0.51666 / 60.0, 2)
+				consumoHorasPropEst = round((max(prs01) - min(prs001)), 2)
 
 			if len(bow002) == 0:
 				consumoCombustibleBow = 0
