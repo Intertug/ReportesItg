@@ -125,7 +125,7 @@ def genMes(dateone, vessel):
 		tomorrow = tomorrow.isoformat()[:10]
 		cursor = connection.cursor()
 
-		if(vessel == "Baru Pacifico" or vessel == "Baru Inti" or vessel == "Mistral" or vessel == "Vali"):
+		if(vessel == 33 or vessel == 34 or vessel == 28 or vessel == 23):
 			date1 = str(diaUno) + "060000"
 			date2 = str(tomorrow) + "060000"
 			cursor.execute('select DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  '+ str(vessel) +' and TimeString > "'+str(date1)+'" and TimeString < "'+ str(date2) +'";')
@@ -332,8 +332,7 @@ def genMes(dateone, vessel):
 def genDia(dateone, tomorrow, vessel):
 
 	cursor = connection.cursor()
-	print vessel
-	if(vessel == "Baru Pacifico" or vessel == "Baru Inti" or vessel == "Mistral" or vessel == "Vali"):
+	if(vessel == 33 or vessel == 34 or vessel == 28 or vessel == 23):
 		cursor.execute('select DataCode, DataValue from [2160-DAQOnBoardData] where vesselid =  '+ str(vessel) +' and TimeString > "'+str(dateone)+'060000" and TimeString < "'+ str(tomorrow) +'060000";')
 		rows = cursor.fetchall()
 		cursor.close()
