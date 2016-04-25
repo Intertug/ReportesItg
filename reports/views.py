@@ -54,7 +54,7 @@ def genMes(date):
 		mes = date.month
 
 	cursor = connection.cursor()
-	cursor.execute('select fechahora, codvariable, valor from datos where month(fechahora) = month("'+str(date)+'");')
+	cursor.execute('select fechahora, codvariable, valor from datos where month(fechahora) = month("'+str(date)+'") and year(fechahora) = year("'+str(date)+'");')
 	rows = cursor.fetchall()
 	cursor.close()
 
@@ -169,7 +169,7 @@ def genMes(date):
 def genDia(date):
 
 	cursor = connection.cursor()
-	cursor.execute('select codvariable, valor from datos where dayofyear(fechahora) = dayofyear("'+str(date)+'");')
+	cursor.execute('select codvariable, valor from datos where dayofyear(fechahora) = dayofyear("'+str(date)+'") and year(fechahora) = year("'+str(date)+'");')
 	rows = cursor.fetchall()
 	cursor.close()
 
