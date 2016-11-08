@@ -60,22 +60,22 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc', #190.242.119.122
-        'NAME': 'ITG-Sio',            
-        'USER': 'SioPlatformUsr',     
-        'PASSWORD': 'S10Pl@tf0rm',    
-        'HOST': 'MSSQL-PYTHON',       
-        'PORT': '1433',                      
+        'NAME': '#',            
+        'USER': '#',     
+        'PASSWORD': '#',    
+        'HOST': '#',       
+        'PORT': '#',                      
         'OPTIONS': {
                 'host_is_server': False,
                 'dsn': 'MSSQL-PYTHON',
         },
     }
 }
-DATABASE_NAME = 'ITG-Sio'
-DATABASE_HOST = 'MSSQL-PYTHON'
-DATABASE_PORT = '1433'
-DATABASE_USER = 'SioPlatformUsr'
-DATABASE_PASSWORD = 'S10Pl@tf0rm'
+DATABASE_NAME = '#'
+DATABASE_HOST = '#'
+DATABASE_PORT = '#'
+DATABASE_USER = '#'
+DATABASE_PASSWORD = '#'
 DATABASE_OPTIONS = {
         'host_is_server': False,
         'dsn': 'MSSQL-PYTHON',
